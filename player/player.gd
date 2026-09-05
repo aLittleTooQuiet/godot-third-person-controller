@@ -6,10 +6,13 @@ extends CharacterBody3D
 @export var camera_tilt_max: float = 30.0
 @export var default_fov: float = 75.0
 @export var fov_max: float = 80.0
+@export var spring_arm_default_length: float = 5.0
+@export var spring_arm_max_length: float = 8.0
 
 @onready var pivot_horizontal: Node3D = %PivotHorizontal
 @onready var pivot_vertical: Node3D = %PivotVertical
 @onready var camera: Camera3D = %Camera3D
+@onready var spring_arm: SpringArm3D = $CameraMount/PivotHorizontal/PivotVertical/SpringArm3D
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
@@ -58,8 +61,15 @@ func _input(event: InputEvent) -> void:
 		if pivot_vertical.rotation.x > 0:
 			var fov_max_ratio = 1 - (cam_max_angle_rads - pivot_vertical.rotation.x)
 			camera.fov = default_fov + ((fov_max - default_fov) * fov_max_ratio)
-		else:
+		# Increase camera distance as camera looks down
+		elif pivot_vertical.rotation.x < 0:
 			camera.fov = default_fov
+			var fov_min_ratio = 1 - (pivot_vertical.rotation.x - cam_min_angle_rads)
+			print(fov_min_ratio)
+			if fov_min_ratio > 0:
+				spring_arm.spring_length = spring_arm_default_length + ((spring_arm_max_length - spring_arm_default_length) * fov_min_ratio)
+			else:
+				spring_arm.spring_length = spring_arm_default_length
 		pivot_horizontal.rotation.y += -event.relative.x * mouse_h_sensitivity
 		
 	
