@@ -5,7 +5,7 @@ extends CharacterBody3D
 @export var camera_tilt_min: float = -60.0
 @export var camera_tilt_max: float = 30.0
 @export var default_fov: float = 75.0
-@export var fov_max: float = 90.0
+@export var fov_max: float = 80.0
 
 @onready var pivot_horizontal: Node3D = %PivotHorizontal
 @onready var pivot_vertical: Node3D = %PivotVertical
@@ -45,13 +45,21 @@ func _physics_process(delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED and event is InputEventMouseMotion:
+		var cam_min_angle_rads := deg_to_rad(camera_tilt_min)
+		var cam_max_angle_rads := deg_to_rad(camera_tilt_max)
 		pivot_vertical.rotation.x += event.relative.y * mouse_v_sensitivity
 		pivot_vertical.rotation.x = clampf(
 			pivot_vertical.rotation.x,
-			deg_to_rad(camera_tilt_min),
-			deg_to_rad(camera_tilt_max)
+			cam_min_angle_rads,
+			cam_max_angle_rads
 			)
-		print(pivot_vertical.rotation.x)
+			
+		# Increase FOV as the camera looks up
+		if pivot_vertical.rotation.x > 0:
+			var fov_max_ratio = 1 - (cam_max_angle_rads - pivot_vertical.rotation.x)
+			camera.fov = default_fov + ((fov_max - default_fov) * fov_max_ratio)
+		else:
+			camera.fov = default_fov
 		pivot_horizontal.rotation.y += -event.relative.x * mouse_h_sensitivity
 		
 	

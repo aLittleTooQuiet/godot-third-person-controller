@@ -23,6 +23,9 @@ size = Vector2(500, 500)
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_uq3xw"]
 
+[sub_resource type="BoxMesh" id="BoxMesh_uq3xw"]
+size = Vector3(10, 100, 10)
+
 [node name="Main" type="Node3D" unique_id=152015881]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=113014109]
@@ -35,12 +38,26 @@ shadow_enabled = true
 [node name="Player" parent="." unique_id=1558574974 instance=ExtResource("1_ig7tw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=75996463]
+[node name="Node" type="Node" parent="." unique_id=1048274564]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Node" unique_id=75996463]
 physics_material_override = SubResource("PhysicsMaterial_uq3xw")
 
-[node name="floor" type="MeshInstance3D" parent="StaticBody3D" unique_id=1126532208]
+[node name="floor" type="MeshInstance3D" parent="Node/StaticBody3D" unique_id=1126532208]
 material_override = SubResource("StandardMaterial3D_op3sa")
 mesh = SubResource("PlaneMesh_uq3xw")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1957499806]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node/StaticBody3D" unique_id=1957499806]
 shape = SubResource("WorldBoundaryShape3D_uq3xw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node" unique_id=494399818]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.062668, 50, -219.63513)
+mesh = SubResource("BoxMesh_uq3xw")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Node" unique_id=447228694]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.97632, 50, -149.25436)
+mesh = SubResource("BoxMesh_uq3xw")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Node" unique_id=1205341218]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.898514, 50, -111.3351)
+mesh = SubResource("BoxMesh_uq3xw")
