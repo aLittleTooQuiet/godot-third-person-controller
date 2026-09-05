@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://dmq6xwywu2qyr"]
+
+[ext_resource type="Script" uid="uid://canodw368nnna" path="res://player/player.gd" id="1_oul6g"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uq3xw"]
+
+[sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_uq3xw"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_uq3xw"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_uq3xw"]
+size = Vector3(0.5, 0.235, 0.461)
+
+[node name="Player" type="CharacterBody3D" unique_id=1558574974]
+script = ExtResource("1_oul6g")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=909987702]
+shape = SubResource("CapsuleShape3D_uq3xw")
+
+[node name="CameraMount" type="Node3D" parent="." unique_id=1080559611]
+
+[node name="PivotHorizontal" type="Node3D" parent="CameraMount" unique_id=1076346914]
+unique_name_in_owner = true
+
+[node name="PivotVertical" type="Node3D" parent="CameraMount/PivotHorizontal" unique_id=868360592]
+unique_name_in_owner = true
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraMount/PivotHorizontal/PivotVertical" unique_id=1563627009]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("SeparationRayShape3D_uq3xw")
+spring_length = 5.0
+
+[node name="Camera3D" type="Camera3D" parent="CameraMount/PivotHorizontal/PivotVertical/SpringArm3D" unique_id=995551599]
+unique_name_in_owner = true
+current = true
+
+[node name="Avatar" type="Node3D" parent="." unique_id=759280331]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Avatar" unique_id=96168479]
+mesh = SubResource("CapsuleMesh_uq3xw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Avatar/MeshInstance3D" unique_id=1364138331]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.29303074, -0.47728807)
+mesh = SubResource("BoxMesh_uq3xw")
