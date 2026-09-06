@@ -54,12 +54,12 @@ func _input(event: InputEvent) -> void:
 			
 		# Increase FOV as the camera looks up
 		if pivot_vertical.rotation.x > 0:
-			var fov_max_ratio = 1 - (cam_max_angle_rads - pivot_vertical.rotation.x)
+			var fov_max_ratio := 1 - (cam_max_angle_rads - pivot_vertical.rotation.x)
 			camera.fov = default_fov + ((fov_max - default_fov) * fov_max_ratio)
 		# Increase camera distance as camera looks down
 		elif pivot_vertical.rotation.x < 0:
 			camera.fov = default_fov
-			var fov_min_ratio = 1 - (pivot_vertical.rotation.x - cam_min_angle_rads)
+			var fov_min_ratio := 1 - (pivot_vertical.rotation.x - cam_min_angle_rads)
 			if fov_min_ratio > 0:
 				spring_arm.spring_length = spring_arm_default_length + ((spring_arm_max_length - spring_arm_default_length) * fov_min_ratio)
 			else:
