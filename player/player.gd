@@ -60,7 +60,6 @@ func _input(event: InputEvent) -> void:
 		elif pivot_vertical.rotation.x < 0:
 			camera.fov = default_fov
 			var fov_min_ratio = 1 - (pivot_vertical.rotation.x - cam_min_angle_rads)
-			print(fov_min_ratio)
 			if fov_min_ratio > 0:
 				spring_arm.spring_length = spring_arm_default_length + ((spring_arm_max_length - spring_arm_default_length) * fov_min_ratio)
 			else:
