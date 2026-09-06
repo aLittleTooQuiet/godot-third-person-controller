@@ -77,12 +77,11 @@ func _unhandled_input(event: InputEvent) -> void:
 			
 			
 func _handle_controller_camera_movement() -> void:
-	# camera vertical (controller):
+	# camera vertical:
 	var camera_v := -Input.get_axis("camera_forward", "camera_backward")
 	if invert_v_look:
 		camera_v = -camera_v
 	if !is_zero_approx(camera_v):
-		print("camera_v: %f" % camera_v)
 		var cam_min_angle_rads := deg_to_rad(camera_tilt_min)
 		var cam_max_angle_rads := deg_to_rad(camera_tilt_max)
 		pivot_vertical.rotation.x += camera_v * joypad_v_sensitivity
@@ -91,7 +90,7 @@ func _handle_controller_camera_movement() -> void:
 			cam_min_angle_rads,
 			cam_max_angle_rads
 			)
-	# camera horizontal (controller):
+	# camera horizontal:
 	var camera_h := Input.get_axis("camera_left", "camera_right")
 	if !is_zero_approx(camera_h):
 		pivot_horizontal.rotation.y += -camera_h * joypad_h_sensitivity
